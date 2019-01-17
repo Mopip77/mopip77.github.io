@@ -5,9 +5,9 @@ mopip77:
     - title: Github
       url: https://github.com/mopip77
       icon: fab fa-github-square
-    - title: Instagram
-      url: https://instagram.com/mopip77
-      icon: fab fa-instagram
+    - title: Mail
+      url: "mailto: mopip77@qq.com"
+      icon: fas fa-envelope
     - title: Weibo
       url: https://weibo.com/lwx1998
       icon: fab fa-weibo

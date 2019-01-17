@@ -4,12 +4,13 @@ title: Chrome必备插件
 tags: 
 - Chrome
 - win10
+video: //player.bilibili.com/player.html?aid=30044661&cid=52364535&page=1
 ---
 
 尝试过一些比较好用的Chrome插件
 <!--more-->
 
-<iframe src="//player.bilibili.com/player.html?aid=30044661&cid=52364535&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width=600 height=470> </iframe>
+
 
 1. [Adblock Plus](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb) 屏蔽网页上及视频的广告
 ~~2. [crxMouse](https://chrome.google.com/webstore/detail/jlgkpaicikihijadgifklkbpdajbkhjo) 鼠标手势，让浏览更加便利~~
