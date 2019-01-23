@@ -20,6 +20,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Sow nothing, reap nothing.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://blog.mopip77.tech" # the base hostname & protocol for your site, e.g. http://example.com
+webicon: '/logo3.ico'  # 我在这个主题中定义的，其他的没法用
 # twitter_username: mopip77
 # github_username:  mopip77
 locale: zh-CN
