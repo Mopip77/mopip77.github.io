@@ -10,7 +10,7 @@ tags:
 <!--*-->
 <!--more-->
 
-- 本教程基于Debian8
+> 本教程基于Debian8
 
 ## 安装lnmp
 

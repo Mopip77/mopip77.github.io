@@ -61,15 +61,5 @@ export PATH=/app/ffmpeg/bin:$PATH
 #保存退出后，执行下面，使其生效
 source /etc/profile
 ```
-### 5. 常用操作
-
-* 合并mp4
-
-  ```bash
-  #转成ts后拼接
-  ffmpeg -i 1.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 1.ts
-  ffmpeg -i 2.mp4 -vcodec copy -acodec copy -vbsf h264_mp4toannexb 2.ts
-  ffmpeg -i "concat:1.ts|2.ts" -acodec copy -vcodec copy -absf aac_adtstoasc output.mp4
-  ```
 
   
