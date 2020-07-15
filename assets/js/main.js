@@ -1,17 +1,41 @@
-$(document).ready(function() {
-  // main menu toggle
-  var toggleButton = document.getElementById("menu-toggle");
-  var menu = document.getElementById("primary-nav");
+var leftTab = document.getElementById('left-tab'),
+    rightTab = document.getElementById('right-tab');
 
-  if (toggleButton && menu) {
-    toggleButton.addEventListener("click", function() {
-      menu.classList.toggle("js-menu-is-open");
-    });
-  }
+// 垃圾方法，该方法必须等页面加载玩才有效
+// window.onload = function(){
+//   btn[0].onmouseover=function() {
+//     leftTab.style.display="block";
+//     leftTab.setAttribute("class","rotateInUpLeft self-animated");
+//   }
+//   btn[0].onmouseout=function() {
+//     leftTab.setAttribute("class","rotateOutDownLeft self-animated");
+//     // leftTab.style.display="none";
+//   }
+//   btn[1].onmouseover=function() {
+//     rightTab.style.display="block";
+//     rightTab.setAttribute("class","rotateInUpRight self-animated");
+//   }
+//   btn[1].onmouseout=function() {
+//     rightTab.setAttribute("class","rotateOutDownRight self-animated");
+//     // leftTab.style.display="none";
+//   }
+//
+// }
 
-  // initialize smooth scroll
-  $("a").smoothScroll({ offset: -20 });
+function showLeft() {
+  leftTab.style.display="block";
+  leftTab.setAttribute("class","rotateInUpLeft self-animated");
+}
 
-  // add lightbox class to all image links
-  $("a[href$='.jpg'], a[href$='.png'], a[href$='.gif']").attr("data-lity", "");
-});
+function goneLeft() {
+  leftTab.setAttribute("class","rotateOutDownLeft self-animated");
+}
+
+function showRight() {
+  rightTab.style.display="block";
+  rightTab.setAttribute("class","rotateInUpRight self-animated");
+}
+
+function goneRight() {
+  rightTab.setAttribute("class","rotateOutDownRight self-animated");
+}

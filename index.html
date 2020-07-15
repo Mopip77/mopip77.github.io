@@ -1,7 +1,17 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
-layout: home
-paginate: true
+layout: default
+title: your awesome title
+page-title: Mopip's Blog
+home-title: Sow nothing, reap nothing.
 ---
+
+{% include header.html %}
+{% include boot.html %}
+<main>
+    {% include title.html %}
+    <ul class="post-list">
+      {% include posts_paginator.html %}
+    </ul>
+</main>
+{% include pageNav.html %}
+{% include footer.html %}
