@@ -4,8 +4,9 @@
   type: github
   icon: 'fab fa-github'
 -
-  type: twitter
-  icon: 'fab fa-twitter'
+  type: bilibili
+  icon: 'fas fa-video'
+  url: https://space.bilibili.com/2977639/video
 -
   type: email
   icon: 'fas fa-envelope'
