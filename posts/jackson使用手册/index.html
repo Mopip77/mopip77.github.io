@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="jackson使用说明" /><meta property="og:locale" content="en" /><meta name="description" content="引入 首先说到jar包的引入，jackson分为三种jar包 core annotation databind" /><meta property="og:description" content="引入 首先说到jar包的引入，jackson分为三种jar包 core annotation databind" /><link rel="canonical" href="https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" /><meta property="og:url" content="https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" /><meta property="og:site_name" content="Mopip77" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2020-07-23T00:00:00+08:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="jackson使用说明" /><meta name="twitter:site" content="@mopip77" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2020-07-24T11:17:03+08:00","datePublished":"2020-07-23T00:00:00+08:00","description":"引入 首先说到jar包的引入，jackson分为三种jar包 core annotation databind","headline":"jackson使用说明","mainEntityOfPage":{"@type":"WebPage","@id":"https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"},"url":"https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/"}</script><title>jackson使用说明 | Mopip77</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Mopip77"><meta name="application-name" content="Mopip77"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src=" /assets/img/avatar.png " alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Mopip77</a></div><div class="site-subtitle font-italic">热爱可抵，岁月漫长</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/Mopip77" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://space.bilibili.com/2977639/video" aria-label="bilibili" target="_blank" rel="noopener"> <i class="fas fa-video"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['mopip77','qq.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper" class="row justify-content-center"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>jackson使用说明</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>jackson使用说明</h1><div class="post-meta text-muted"><div> By <em> <a href="https://github.com/Mopip77">Mopip77</a> </em></div><div class="d-flex"><div> <span> Posted <em class="timeago" data-ts="1595433600" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2020-07-23 </em> </span> <span> Updated <em class="timeago" data-ts="1595560623" data-toggle="tooltip" data-placement="bottom" data-tooltip-df="llll" > 2020-07-24 </em> </span> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2487 words"> <em>13 min</em> read</span></div></div></div><div class="post-content"><h2 id="引入"><span class="mr-2">引入</span><a href="#引入" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><p>首先说到jar包的引入，jackson分为三种jar包</p><ul><li>core<li>annotation<li>databind</ul><p>由于databind依赖了core和annotation，所以<strong>只需要引入databind即可</strong></p><h2 id="demo"><span class="mr-2">demo</span><a href="#demo" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><p>一个Pojo类</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="nd">@Data</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">APojo</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stuId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">stuName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Date</span> <span class="n">date</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">BPojo</span> <span class="n">bPojo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">intList</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">intArr</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">AEnum</span> <span class="n">aEnum</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>这里大致覆盖了大部分的java类型，额外的类型或者千层饼嵌套类型可以自己尝试</p><h3 id="使用objectapper变换jsonstring和object"><span class="mr-2">使用Objectapper变换jsonString和object</span><a href="#使用objectapper变换jsonstring和object" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="nc">APojo</span> <span class="n">li</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">APojo</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"li"</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Date</span><span class="o">(),</span> <span class="k">new</span> <span class="nc">BPojo</span><span class="o">(</span><span class="s">"zxcdv"</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span> <span class="n">list</span><span class="o">,</span> <span class="n">map</span><span class="o">,</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[]{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">},</span> <span class="nc">AEnum</span><span class="o">.</span><span class="na">AA</span><span class="o">);</span>
+
+<span class="nc">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
+<span class="nc">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">li</span><span class="o">);</span>
+
+<span class="nc">APojo</span> <span class="n">aPojo</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="na">readValue</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="nc">APojo</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</pre></table></code></div></div><p>一个write一个read就可以覆盖80%的使用场景了，所以这里不是重点，重点是序列化后的格式如何？</p><p>Tips (<strong>IMPORTANT</strong>):<br /> 需要注意，使用<strong>反序列化必须有无参的构造函数</strong>，所以有@AllArgsConstructor那也必须要配对一个@NoArgsConstructor，否则反序列化时直接报错</p><h3 id="默认序列化格式"><span class="mr-2">默认序列化格式</span><a href="#默认序列化格式" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><p>对于上面的对象序列化的结果如下：</p><div class="language-json highlighter-rouge"><div class="code-header"> <span data-label-text="JSON"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="p">{</span><span class="w">
+    </span><span class="nl">"stuId"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"stuName"</span><span class="p">:</span><span class="s2">"li"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"date"</span><span class="p">:</span><span class="mi">1595515913865</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"intList"</span><span class="p">:[</span><span class="w">
+        </span><span class="mi">56</span><span class="p">,</span><span class="w">
+        </span><span class="mi">5</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"map"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"1"</span><span class="p">:</span><span class="s2">"asdf"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"3"</span><span class="p">:</span><span class="s2">"zxcb"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"intArr"</span><span class="p">:[</span><span class="w">
+        </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="mi">2</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"aenum"</span><span class="p">:</span><span class="s2">"AA"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bpojo"</span><span class="p">:{</span><span class="w">
+        </span><span class="nl">"a1"</span><span class="p">:</span><span class="s2">"zxcdv"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"b2"</span><span class="p">:</span><span class="mi">2</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></table></code></div></div><p>需要注意的一些点：</p><ul><li>Date会被转换成时间戳<li>List和array都是一样地用[item1, item2…]来表示<li>map和object一样都是用{“key”: value, …}来表示<li>enum的值是枚举的名称，而不是内部值（这里的内部值是一个int）</ul><p>最需要注意的一点是<strong>字段名称的转换</strong>：<br /> stuId -&gt; stuId<br /> bPojo -&gt; bpojo<br /> 看到这个转换规则是不是很懵逼？<br /> 其实逻辑就是如果变量名最前面<strong>只有至多一个小写字母</strong>，那么最前面的所有大写字母都会变成小写，例如:<br /> aAAdd -&gt; aaadd<br /> AAAdd -&gt; aaadd<br /> aaAdd -&gt; aaAdd<br /> AAaDD -&gt; aaaDD</p><p>所以，如果不是全小写还是推荐使用<code class="language-plaintext highlighter-rouge">@JsonProperty()</code>注解来指定序列化的名称</p><blockquote><p>有趣的是在gradle中使用@AllargsConstructor，然后使用全参的构造函数会报错，可能缺少什么配置，后续跟进</p></blockquote><h3 id="常用的jackson-annotation"><span class="mr-2">常用的jackson annotation</span><a href="#常用的jackson-annotation" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><h4 id="jsonproperty"><span class="mr-2">@JsonProperty</span><a href="#jsonproperty" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个应该是最常用的注解了，因为他涵盖了<strong>序列化名称</strong>，<strong>是否必须使用</strong>， <strong>位置的索引</strong>，<strong>默认值</strong>，<strong>访问权限</strong></p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="nc">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+
+<span class="kt">boolean</span> <span class="nf">required</span><span class="o">()</span> <span class="k">default</span> <span class="kc">false</span><span class="o">;</span>
+
+<span class="kt">int</span> <span class="nf">index</span><span class="o">()</span> <span class="k">default</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="nf">defaultValue</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+
+<span class="nc">JsonProperty</span><span class="o">.</span><span class="na">Access</span> <span class="nf">access</span><span class="o">()</span> <span class="k">default</span> <span class="nc">JsonProperty</span><span class="o">.</span><span class="na">Access</span><span class="o">.</span><span class="na">AUTO</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">enum</span> <span class="nc">Access</span> <span class="o">{</span>
+    <span class="no">AUTO</span><span class="o">,</span>
+    <span class="no">READ_ONLY</span><span class="o">,</span>
+    <span class="no">WRITE_ONLY</span><span class="o">,</span>
+    <span class="no">READ_WRITE</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nf">Access</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p><strong>序列化名称</strong>就是json中字段的名称，如果必须那么json反序列化时必须提供该字段否则报错 <br /> <strong>位置的索引</strong>则是字段在json中的位置（相对大小即可，无需一一紧靠，索引值越小排在越前面）<br /> <strong>默认值</strong>（预备字段，现在还不能使用）<br /> <strong>访问权限</strong>可以设置读、写、读写（反序列化，序列化，双向）</p><h4 id="jsonignoreproperties"><span class="mr-2">@JsonIgnoreProperties</span><a href="#jsonignoreproperties" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个可以指定需要忽略的字段，但是最常用的还是<code class="language-plaintext highlighter-rouge">@JsonIgnoreProperties(ignoreUnknown = true)</code>，如果不使用这个，那么如果json中包括pojo中不存在的字段，则反序列化时会直接报错。<br /> 当然即便使用了，如果传入的字段的值属性有误，也会报错。</p><p>其余的我们按照读写的使用区别来分类讨论</p><h3 id="读写"><span class="mr-2">读写</span><a href="#读写" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><h4 id="jsonignore"><span class="mr-2">@JsonIgnore</span><a href="#jsonignore" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>直接在字段上使用，读写时都会忽略，不会写到json中，而生成obj时则是默认值。</p><h4 id="jsonignoreproperties-1"><span class="mr-2">@JsonIgnoreProperties</span><a href="#jsonignoreproperties-1" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>上面说了其最主要的使用方法，还可以在类上使用来一一指定需要忽略的字段<code class="language-plaintext highlighter-rouge">@JsonIgnoreProperties（{“firstName”，“lastName”}）</code></p><h4 id="jsonignoretype"><span class="mr-2">@JsonIgnoreType</span><a href="#jsonignoretype" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>直接在类上使用，整个类都不会序列化和反序列化，例如我们将这个注释写在demo中的BPojo上，序列化的结果就没有bPojo</p><h4 id="jsonautodetect"><span class="mr-2">@JsonAutoDetect</span><a href="#jsonautodetect" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个属实没啥用，这个的使用场景是在<strong>没有getter、setter方法</strong>时，使用这个注解来自动侦测字段 例如：</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@JsonAutoDetect</span><span class="o">(</span><span class="n">fieldVisibility</span> <span class="o">=</span> <span class="nc">JsonAutoDetect</span><span class="o">.</span><span class="na">Visibility</span><span class="o">.</span><span class="na">NON_PRIVATE</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">APojo</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stuId</span><span class="o">;</span>
+    <span class="nc">Date</span> <span class="n">date</span><span class="o">;</span>
+</pre></table></code></div></div><p>首先这个pojo没有setter和getter，然后有一个private和default的字段，我们这时候将filed可见性调整至非private，这样date就可以被序列化和反序列化 。。。多此一举<br /> 当然有多种类型可以自由组合：<br /> 可见性： fieldVisibility，getterVisibility，isGetterVisibility，setterVisibility，creatorVisibility<br /> 字段可见性：ANY, NON_PRIVATE, PROTECTED_AND_PUBLIC, PUBLIC_ONLY, NONE, DEFAULT;</p><h3 id="读"><span class="mr-2">读</span><a href="#读" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><h4 id="jsonsetter"><span class="mr-2">@JsonSetter</span><a href="#jsonsetter" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>在json字段和java字段名不同的时候使用，作用在setter方法上，例如json为id，java为stuId，那我们可以：</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@JsonSetter</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStuId</span><span class="o">(</span><span class="kt">int</span> <span class="n">stuId</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">stuId</span> <span class="o">=</span> <span class="n">stuId</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>当然，我想不明白为什么不使用@JsonProperty</p><h4 id="jsonanysetter"><span class="mr-2">@JsonAnySetter</span><a href="#jsonanysetter" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个可能稍微有点用，我们之前说过，可能会传入不属于java的字段，我们可以使用@JsonIgnoreProperties来忽略他们，当然如果你需要记录一下这些额外字段时，你可以用这个注解配合一个map来接收这些kv</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="nd">@JsonIgnore</span>
+<span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+
+<span class="nd">@JsonAnySetter</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="nc">String</span> <span class="n">fieldName</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">value</span><span class="o">){</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">fieldName</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="nc">Object</span> <span class="nf">get</span><span class="o">(</span><span class="nc">String</span> <span class="n">fieldName</span><span class="o">){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">properties</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">fieldName</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>创建一个map，设置一个setter方法，但是这个setter方法并不是设置properties的引用，而是put kv，并在这个set方法上使用<code class="language-plaintext highlighter-rouge">@JsonAnySetter</code> 其次，这个map我们也不会传出去，所以使用@JsonIgnore去忽略他，有趣的是这难道不会在反序列化的时候无法写入吗？ @JsonIgnore会让这个properties在反序列化时无法赋值，但是@JsonAnySetter指定的set方法其实是put方法，所以可以写入。</p><h4 id="jsoncreator"><span class="mr-2">@JsonCreator</span><a href="#jsoncreator" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>当<strong>没有setter或者无参构造函数</strong>时，你可以在构造方法上使用这个注解，反序列化时就可以使用有参的构造器来构建obj，但是需要指定每一个字段的json名，否则会报错</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@JsonCreator</span>
+<span class="kd">public</span> <span class="nf">PersonImmutable</span><span class="o">(</span>
+        <span class="nd">@JsonProperty</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span>  <span class="kt">long</span> <span class="n">id</span><span class="o">,</span>
+        <span class="nd">@JsonProperty</span><span class="o">(</span><span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+</pre></table></code></div></div><h4 id="jsondeserialize"><span class="mr-2">@JsonDeserialize</span><a href="#jsondeserialize" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>使用自定义的反序列化器，需要指定class，并且该类需要实现一个接口</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonDeserialize</span> <span class="o">{</span>
+ 
+    <span class="kd">public</span> <span class="kt">long</span>    <span class="n">id</span>      <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span>  <span class="n">name</span>    <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+ 
+    <span class="nd">@JsonDeserialize</span><span class="o">(</span><span class="n">using</span> <span class="o">=</span> <span class="nc">OptimizedBooleanDeserializer</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OptimizedBooleanDeserializer</span> <span class="kd">extends</span> <span class="nc">JsonDeserializer</span><span class="o">&lt;</span><span class="nc">Boolean</span><span class="o">&gt;</span> <span class="o">{</span>
+ 
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Boolean</span> <span class="nf">deserialize</span><span class="o">(</span><span class="nc">JsonParser</span> <span class="n">jsonParser</span><span class="o">,</span>
+            <span class="nc">DeserializationContext</span> <span class="n">deserializationContext</span><span class="o">)</span> <span class="kd">throws</span>
+        <span class="nc">IOException</span><span class="o">,</span> <span class="nc">JsonProcessingException</span> <span class="o">{</span>
+ 
+        <span class="nc">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">jsonParser</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="s">"0"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">text</span><span class="o">))</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>其中泛型指定的是返回值（java字段中的），而<code class="language-plaintext highlighter-rouge">jsonParser.getText()</code>读取的是json的string value</p><h3 id="写"><span class="mr-2">写</span><a href="#写" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3></h3><p>介绍完了读相关的注解，写的部分注解即为读注解的逆操作，可以对照学习</p><h4 id="jsoninclude"><span class="mr-2">@JsonInclude</span><a href="#jsoninclude" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个指定了在何种情况下的字段才会导出</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@JsonInclude</span><span class="o">(</span><span class="nc">JsonInclude</span><span class="o">.</span><span class="na">Include</span><span class="o">.</span><span class="na">NON_EMPTY</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonInclude</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">long</span>  <span class="n">personId</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span>     <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</pre></table></code></div></div><p>例如指定了non_empty并且name为null的话，name就不会导出到json中。</p><h4 id="jsongetter"><span class="mr-2">@JsonGetter</span><a href="#jsongetter" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个就是@JsonSetter的孪生兄弟，作用在Getter方法上，导出到json中的字段为注解指定的字段。</p><h4 id="jsonanygetter"><span class="mr-2">@JsonAnyGetter</span><a href="#jsonanygetter" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>@JsonAnySetter是使用一个map接收所有json中unknown的字段，而@JsonAnyGetter则是摊平（flat）map中的字段</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">;</span>
+    <span class="nd">@JsonAnyGetter</span>
+    <span class="kd">public</span> <span class="nc">Map</span> <span class="nf">gettttt</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">map</span><span class="o">;</span>
+    <span class="o">}</span>
+</pre></table></code></div></div><p>假如map中包括 {a:1, b:2}<br /> 那么map中的元素也会和其他元素平级出现在json中，不过最好别用，万一重名咋整<br /> 还有就是如果使用了@JsonAnyGetter那么必须使用@JsonAnySetter，否则序列化和反序列化是不可逆的，除非他们再重新拼出一个map传入</p><h4 id="jsonpropertyorder"><span class="mr-2">@JsonPropertyOrder</span><a href="#jsonpropertyorder" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个顾名思义是指定json中的字段顺序的，但是和@JsonProperty使用index不同，这个需要写在类上，并且显式声明字段的顺序</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="nd">@JsonPropertyOrder</span><span class="o">({</span><span class="s">"name"</span><span class="o">,</span> <span class="s">"personId"</span><span class="o">})</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonPropertyOrder</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">long</span>  <span class="n">personId</span>  <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span>     <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>这样，那么就会出现在最前面</p><h4 id="jsonrawvalue"><span class="mr-2">@JsonRawValue</span><a href="#jsonrawvalue" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>直接输出原始值，有点像sql的${}<br /> 重点使用场景就是如果一个字段String表示的是一段json文本，并且需要输出到json作为一个可读的json obj而不是一串字符串时使用。</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonRawValue</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">long</span>   <span class="n">personId</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="nd">@JsonRawValue</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">address</span>  <span class="o">=</span>
+            <span class="s">"{ \"street\" : \"Wall Street\", \"no\":1}"</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>这样，序列化后就会直接生成一个json子对象</p><div class="language-json highlighter-rouge"><div class="code-header"> <span data-label-text="JSON"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="p">{</span><span class="nl">"personId"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nl">"address"</span><span class="p">:{</span><span class="w"> </span><span class="nl">"street"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Wall Street"</span><span class="p">,</span><span class="w"> </span><span class="nl">"no"</span><span class="p">:</span><span class="mi">1</span><span class="p">}}</span><span class="w">
+</span></pre></table></code></div></div><h4 id="jsonvalue"><span class="mr-2">@JsonValue</span><a href="#jsonvalue" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>这个非常奇怪，调用序列化方法会生成一个自定义的字符串，类似toString方法</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="nd">@JsonValue</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">toJson</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">stuName</span> <span class="o">+</span> <span class="s">" de id is:"</span> <span class="o">+</span> <span class="n">stuId</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><p>之后我们调用writeAsString方法就会返回这个toJson的值，相当于我们要在这个方法中自行完成json字符串的拼接。。。 <br /> 那我用你这个jackson干嘛。。。</p><h4 id="jsonserialize"><span class="mr-2">@JsonSerialize</span><a href="#jsonserialize" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h4></h4><p>之前介绍了custom反序列化器，现在则是custom序列化器</p><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonSerializer</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">long</span>   <span class="n">personId</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span>     <span class="o">=</span> <span class="s">"John"</span><span class="o">;</span>
+    <span class="nd">@JsonSerialize</span><span class="o">(</span><span class="n">using</span> <span class="o">=</span> <span class="nc">OptimizedBooleanSerializer</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">enabled</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></table></code></div></div><div class="language-java highlighter-rouge"><div class="code-header"> <span data-label-text="Java"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OptimizedBooleanSerializer</span> <span class="kd">extends</span> <span class="nc">JsonSerializer</span><span class="o">&lt;</span><span class="nc">Boolean</span><span class="o">&gt;</span> <span class="o">{</span>
+ 
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">serialize</span><span class="o">(</span><span class="nc">Boolean</span> <span class="n">aBoolean</span><span class="o">,</span> <span class="nc">JsonGenerator</span> <span class="n">jsonGenerator</span><span class="o">,</span> 
+        <span class="nc">SerializerProvider</span> <span class="n">serializerProvider</span><span class="o">)</span> 
+    <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">JsonProcessingException</span> <span class="o">{</span>
+ 
+        <span class="k">if</span><span class="o">(</span><span class="n">aBoolean</span><span class="o">){</span>
+            <span class="n">jsonGenerator</span><span class="o">.</span><span class="na">writeNumber</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">jsonGenerator</span><span class="o">.</span><span class="na">writeNumber</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></table></code></div></div><h2 id="尾巴"><span class="mr-2">尾巴</span><a href="#尾巴" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2></h2><p>自此，大部分的jackson注解已经记录完了，其实正常使用时基本上也就只能用到2、3个注解，因为需要额外的功能我们不需要添加注解，我们一般增加、减少java的字段即可。<br /> 使用复杂的注解徒增复杂度，也就只有在做适配器的时候才可能使用一些复杂的注解。</p></div><div class="post-tail-wrapper text-muted"><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/java/" class="post-tag no-text-decoration" >java</a> <a href="/tags/jackson/" class="post-tag no-text-decoration" >jackson</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=jackson使用说明 - Mopip77&amp;url=https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=jackson使用说明 - Mopip77&amp;u=https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https://mopip77.github.io/posts/jackson%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/&amp;text=jackson使用说明 - Mopip77" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/zerotier%E9%85%8D%E7%BD%AE/">zerotier配置</a><li><a href="/posts/shell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%89%8B%E5%86%8C/">shell常用命令手册</a><li><a href="/posts/ffmpeg%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/">Ffmpeg常见用法【持续更新】</a><li><a href="/posts/Git%E9%AA%9A%E6%93%8D%E4%BD%9C/">Git骚操作</a><li><a href="/posts/netcat%E4%BD%BF%E7%94%A8/">netcat使用</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/linux/">linux</a> <a class="post-tag" href="/tags/nas/">nas</a> <a class="post-tag" href="/tags/aria2/">aria2</a> <a class="post-tag" href="/tags/docker/">docker</a> <a class="post-tag" href="/tags/go/">go</a> <a class="post-tag" href="/tags/onedrive/">onedrive</a> <a class="post-tag" href="/tags/%E4%B8%8B%E8%BD%BD/">下载</a> <a class="post-tag" href="/tags/aria/">aria</a> <a class="post-tag" href="/tags/bt/">bt</a> <a class="post-tag" href="/tags/calibre/">calibre</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="tail-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/zerotier%E9%85%8D%E7%BD%AE/"><div class="card-body"> <em class="timeago small" data-ts="1668009600" > 2022-11-10 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>zerotier配置</h3><div class="text-muted small"><p> 本文主要介绍如何使用zerotier进行虚拟局域网的搭建。内容包含zerotier下载安装,moon节点搭建,router配置。 zerotier下载安装 zerotier的官方下载地址: https://www.zerotier.com/download/ 大部分操作平台可以在这直接下载，对于以下部分平台有代替软件或者需要额外配置 android 建议使用ZerotierFix代替...</p></div></div></a></div><div class="card"> <a href="/posts/qnap%E5%A4%87%E5%BF%98%E5%BD%95/"><div class="card-body"> <em class="timeago small" data-ts="1665417600" > 2022-10-11 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>qnap备忘录</h3><div class="text-muted small"><p> 一些容易忘记但是常用的东西 命令行安装.qpkg安装包 1 2 # 安装并移除安装包 qpkg_cli -m xxx.qpkg crontab qnap的crontab在重启后会丢失，因此不能使用常规的crontab -e来编写 1 2 3 4 5 6 # 编辑cron vim /etc/config/crontab # cron生效 crontab /etc/config/cr...</p></div></div></a></div><div class="card"> <a href="/posts/maven%E6%8A%80%E5%B7%A7/"><div class="card-body"> <em class="timeago small" data-ts="1653926400" > 2022-05-31 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>maven技巧</h3><div class="text-muted small"><p> 展示一些maven的使用技巧 依赖相关 展示项目所有依赖 mvn help:effective-pom -Dverbose 该命令会将项目的所有依赖pom文件整合成一个，并且使用了-Dverbose参数，会将每个dependency或者dependencyManagement的原引用给打印出来。 举个栗子 1 2 3 4 5 6 7 8 9 # property &amp;lt;rsoc...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/%E5%9C%A8%E7%BA%BF%E4%B9%A6%E5%BA%93%E5%AE%89%E8%A3%85%E4%BB%8B%E7%BB%8D/" class="btn btn-outline-primary" prompt="Older"><p>在线书库安装介绍</p></a> <a href="/posts/SpringProfile/" class="btn btn-outline-primary" prompt="Newer"><p>SpringProfile</p></a></div><script src="https://utteranc.es/client.js" repo="Mopip77/mopip7.github.io" issue-term="" crossorigin="anonymous" async> </script> <script type="text/javascript"> $(function() { const origin = "https://utteranc.es"; const iframe = "iframe.utterances-frame"; const lightTheme = "github-light"; const darkTheme = "github-dark"; let initTheme = lightTheme; if ($("html[data-mode=dark]").length > 0 || ($("html[data-mode]").length == 0 && window.matchMedia("(prefers-color-scheme: dark)").matches)) { initTheme = darkTheme; } addEventListener("message", (event) => { let theme; /* credit to <https://github.com/utterance/utterances/issues/170#issuecomment-594036347> */ if (event.origin === origin) { /* page initial */ theme = initTheme; } else if (event.source === window && event.data && event.data.direction === ModeToggle.ID) { /* global theme mode changed */ const mode = event.data.message; theme = (mode === ModeToggle.DARK_MODE ? darkTheme : lightTheme); } else { return; } const message = { type: "set-theme", theme: theme }; const utterances = document.querySelector(iframe).contentWindow; utterances.postMessage(message, origin); }); }); </script></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center text-muted"><div class="footer-left"><p class="mb-0"> © 2023 <a href="https://github.com/Mopip77">Mopip77</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/linux/">linux</a> <a class="post-tag" href="/tags/nas/">nas</a> <a class="post-tag" href="/tags/aria2/">aria2</a> <a class="post-tag" href="/tags/docker/">docker</a> <a class="post-tag" href="/tags/go/">go</a> <a class="post-tag" href="/tags/onedrive/">onedrive</a> <a class="post-tag" href="/tags/%E4%B8%8B%E8%BD%BD/">下载</a> <a class="post-tag" href="/tags/aria/">aria</a> <a class="post-tag" href="/tags/bt/">bt</a> <a class="post-tag" href="/tags/calibre/">calibre</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>
